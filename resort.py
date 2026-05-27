@@ -61,7 +61,8 @@ def update_guest_list():
 
         guest_list.insert(tk.END, text)
 
-        
+
+# หน้าต่างเข้าพัก
 def open_guest_window():
 
     global name_entry
@@ -165,6 +166,101 @@ def open_guest_window():
 
     update_guest_list()
 
+# หน้าต่างการจอง
+def open_booking_window():
+    booking_window = tk.Toplevel()
+
+    booking_window.title(
+            "Booking"
+    )
+
+    booking_window.geometry(
+            "400x300"
+    )
+    # Name
+    tk.Label(
+        booking_window,
+        text="Customer Name"
+    ).pack()
+
+    name_entry = tk.Entry(
+        booking_window
+    )
+
+    name_entry.pack()
+
+    # Room
+    tk.Label(
+        booking_window,
+        text="Room Number"
+    ).pack()
+
+    room_entry = tk.Entry(
+        booking_window
+    )
+
+    room_entry.pack()
+
+    # People
+    tk.Label(
+        booking_window,
+        text="People"
+    ).pack()
+
+    people_entry = tk.Entry(
+        booking_window
+    )
+
+    people_entry.pack()
+
+    # Price
+    tk.Label(
+        booking_window,
+        text="Price"
+    ).pack()
+
+    price_entry = tk.Entry(
+        booking_window
+    )
+
+    price_entry.pack()
+
+    # Days
+    tk.Label(
+        booking_window,
+        text="Stay Days"
+    ).pack()
+
+    days_entry = tk.Entry(
+        booking_window
+    )
+
+    days_entry.pack()
+
+    # Button
+    add_button = tk.Button(
+        booking_window,
+        text="Add Booking",
+        command=add_guest
+    )
+
+    add_button.pack(
+        pady=10
+    )
+
+    # Listbox
+    guest_list = tk.Listbox(
+        booking_window,
+        width=100,
+        height=15
+    )
+
+    guest_list.pack(
+        pady=10
+    )
+
+    update_guest_list()
+
 # สร้างหน้าต่าง
 window = tk.Tk()
 
@@ -200,6 +296,16 @@ guest_button.pack(
     pady=10
 )
 
+booking_button = tk.Button(
+    window,
+    text="Booking",
+    width=20,
+    height=2,
+    command=open_booking_window
+)
+booking_button.pack(
+    pady=10
+)
 
 
 # เริ่มโปรแกรม
