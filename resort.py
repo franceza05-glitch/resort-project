@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 class ResortGuest:
 
-    def __init__(self, name, room_number, people, price, days):
+    def __init__(self, name, room_number, people, price, days, check_in):
 
         self.name = name
         self.room_number = room_number
@@ -13,7 +13,8 @@ class ResortGuest:
         self.price = price
         self.days = days
 
-        self.check_in = datetime.now()
+        self.check_in = check_in
+        #self.check_in = datetime.now()
         self.check_out = self.check_in + timedelta(days=days)
 
 
