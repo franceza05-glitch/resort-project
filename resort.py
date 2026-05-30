@@ -38,6 +38,14 @@ guests = []
 #จองล่วงหน้า
 bookings = []
 
+def is_room_available(room_number, new_check_in, new_check_out):
+    for booking in bookings:
+        if booking.room_number == room_number:
+            if (new_check_in < booking.check_out and new_check_out > booking.check_in):
+                return False
+    return True
+
+
 
 def add_guest():
 
@@ -71,8 +79,16 @@ def add_booking():
 
     try:
         check_in = datetime.strptime(check_in_str, "%d/%m/%Y %H:%M")
+        check_out = check_in + timedelta(days=days)
     except ValueError:
         messagebox.showerror("Error", "Invalid date format! Use dd/mm/yyyy hh:mm")
+        return
+    
+    if  not is_room_available(room, check_in, check_out):
+        messagebox.showwarning(
+        "Room Unavailable",
+        "ห้องพักไม่ว่าง โปรดจองวันอื่น"
+    )
         return
 
     booking = Booking(
