@@ -16,9 +16,27 @@ class ResortGuest:
         self.check_in = datetime.now()
         self.check_out = self.check_in + timedelta(days=days)
 
+class Booking:
+
+    def __init__(self, name, room_number, people, price, days, check_in):
+
+        self.name = name
+        self.room_number = room_number
+        self.people = people
+        self.price = price
+        self.days = days
+        
+        self.check_in = check_in
+        self.check_out = self.check_in + timedelta(days=days)
+        
+
 
 # list เก็บลูกค้าทั้งหมด
+#คนเข้าพัก
 guests = []
+
+#จองล่วงหน้า
+bookings = []
 
 
 def add_guest():
