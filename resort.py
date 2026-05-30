@@ -28,7 +28,7 @@ class Booking:
         
         self.check_in = check_in
         self.check_out = self.check_in + timedelta(days=days)
-        
+
 
 
 # list เก็บลูกค้าทั้งหมด
@@ -60,6 +60,53 @@ def add_guest():
     messagebox.showinfo("Success", "Guest Added!")
 
     update_guest_list()
+
+def add_booking():
+    name = booking_name_entry.get()
+    room = booking_room_entry.get()
+    people = int(booking_people_entry.get())
+    price = float(booking_price_entry.get())
+    days = int(booking_days_entry.get())
+    check_in_str = booking_date_entry.get()
+
+    try:
+        check_in = datetime.strptime(check_in_str, "%d/%m/%Y %H:%M")
+    except ValueError:
+        messagebox.showerror("Error", "Invalid date format! Use dd/mm/yyyy hh:mm")
+        return
+
+    booking = Booking(
+        name,
+        room,
+        people,
+        price,
+        days,
+        check_in
+    )
+
+    bookings.append(booking)
+
+    messagebox.showinfo("Success", "Booking Added!")
+
+    update_booking_list()
+
+def update_booking_list():
+    booking_list.delete(0, tk.END)
+
+    for i, b in enumerate(bookings):
+
+        text = (
+            f"{i+1}. "
+            f"{b.name} | "
+            f"Room {b.room_number} | "
+            f"{b.people} people | "
+            f"${b.price} | "
+            f"{b.days} days | "
+            f"Check-in: {b.check_in.strftime('%d/%m/%Y %H:%M')} | "
+            f"Check-out: {b.check_out.strftime('%d/%m/%Y')}"
+        )
+
+        booking_list.insert(tk.END, text)
 
 
 def update_guest_list():
@@ -186,6 +233,15 @@ def open_guest_window():
 
 # หน้าต่างการจอง
 def open_booking_window():
+
+    global booking_name_entry
+    global booking_room_entry
+    global booking_people_entry
+    global booking_price_entry
+    global booking_days_entry
+    global booking_date_entry
+    global booking_list
+
     booking_window = tk.Toplevel()
 
     booking_window.title(
@@ -201,11 +257,11 @@ def open_booking_window():
         text="Customer Name"
     ).pack()
 
-    name_entry = tk.Entry(
+    booking_name_entry = tk.Entry(
         booking_window
     )
 
-    name_entry.pack()
+    booking_name_entry.pack()
 
     # Room
     tk.Label(
@@ -213,11 +269,11 @@ def open_booking_window():
         text="Room Number"
     ).pack()
 
-    room_entry = tk.Entry(
+    booking_room_entry = tk.Entry(
         booking_window
     )
 
-    room_entry.pack()
+    booking_room_entry.pack()
 
     # People
     tk.Label(
@@ -225,11 +281,11 @@ def open_booking_window():
         text="People"
     ).pack()
 
-    people_entry = tk.Entry(
+    booking_people_entry = tk.Entry(
         booking_window
     )
 
-    people_entry.pack()
+    booking_people_entry.pack()
 
     # Price
     tk.Label(
@@ -237,11 +293,11 @@ def open_booking_window():
         text="Price"
     ).pack()
 
-    price_entry = tk.Entry(
+    booking_price_entry = tk.Entry(
         booking_window
     )
 
-    price_entry.pack()
+    booking_price_entry.pack()
 
     # Days
     tk.Label(
@@ -249,17 +305,30 @@ def open_booking_window():
         text="Stay Days"
     ).pack()
 
-    days_entry = tk.Entry(
+    booking_days_entry = tk.Entry(
         booking_window
     )
 
-    days_entry.pack()
+    booking_days_entry.pack()
+
+    tk.Label(
+        booking_window,
+        text="Check-in (dd/mm/yyyy hh:mm)"
+    ).pack()
+
+    booking_date_entry = tk.Entry(
+    booking_window
+    )
+
+    booking_date_entry.pack()
+
+    
 
     # Button
     add_button = tk.Button(
         booking_window,
         text="Add Booking",
-        command=add_guest
+        command=add_booking
     )
 
     add_button.pack(
@@ -267,17 +336,17 @@ def open_booking_window():
     )
 
     # Listbox
-    guest_list = tk.Listbox(
+    booking_list = tk.Listbox(
         booking_window,
         width=100,
         height=15
     )
 
-    guest_list.pack(
+    booking_list.pack(
         pady=10
     )
 
-    update_guest_list()
+    update_booking_list()
 
 # สร้างหน้าต่าง
 window = tk.Tk()
