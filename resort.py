@@ -160,6 +160,46 @@ def update_guest_list():
 
         guest_list.insert(tk.END, text)
 
+def view_guests():
+
+    guest_view = tk.Toplevel()
+
+    guest_view.title(
+        "Current Guests"
+    )
+
+    guest_view.geometry(
+        "800x500"
+    )
+
+    guest_listbox = tk.Listbox(
+        guest_view,
+        width=120,
+        height=25
+    )
+
+    guest_listbox.pack(
+        pady=10
+    )
+
+    for i, g in enumerate(guests):
+
+        text = (
+            f"{i+1}. "
+            f"{g.name} | "
+            f"Room {g.room_number} | "
+            f"{g.people} people | "
+            f"${g.price} | "
+            f"{g.days} days | "
+            f"Check-in: {g.check_in.strftime('%d/%m/%Y %H:%M')} | "
+            f"Check-out: {g.check_out.strftime('%d/%m/%Y %H:%M')}"
+        )
+
+        guest_listbox.insert(
+            tk.END,
+            text
+        )
+
 
 # หน้าต่างเข้าพัก
 def open_guest_window():
@@ -416,6 +456,18 @@ guest_button = tk.Button(
 )
 
 guest_button.pack(
+    pady=10
+)
+
+view_guest_button = tk.Button(
+    window,
+    text="View Guests",
+    width=20,
+    height=2,
+    command=view_guests
+)
+
+view_guest_button.pack(
     pady=10
 )
 
