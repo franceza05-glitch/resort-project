@@ -85,10 +85,14 @@ def add_booking():
     )
 
     bookings.append(booking)
+    
+    update_booking_list()
 
     messagebox.showinfo("Success", "Booking Added!")
 
-    update_booking_list()
+    booking_window.destroy()
+
+   
 
 def update_booking_list():
     booking_list.delete(0, tk.END)
@@ -241,6 +245,8 @@ def open_booking_window():
     global booking_days_entry
     global booking_date_entry
     global booking_list
+    global booking_window
+
 
     booking_window = tk.Toplevel()
 
