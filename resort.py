@@ -38,7 +38,13 @@ guests = []
 #จองล่วงหน้า
 bookings = []
 
-def is_room_available(room_number, new_check_in, new_check_out):
+def is_guest_room_available(room_number):
+    for guest in guests:
+        if guest.room_number == room_number:
+            return False
+    return True
+
+def is_booking_room_available(room_number, new_check_in, new_check_out):
     for booking in bookings:
         if booking.room_number == room_number:
             if (new_check_in < booking.check_out and new_check_out > booking.check_in):
@@ -54,6 +60,14 @@ def add_guest():
     people = int(people_entry.get())
     price = float(price_entry.get())
     days = int(days_entry.get())
+
+    if not is_guest_room_available(room):
+        messagebox.showwarning(
+        "Room Unavailable",
+        "ห้องพักไม่ว่าง"
+    )
+
+        return
 
     guest = ResortGuest(
         name,
@@ -84,7 +98,7 @@ def add_booking():
         messagebox.showerror("Error", "Invalid date format! Use dd/mm/yyyy hh:mm")
         return
     
-    if  not is_room_available(room, check_in, check_out):
+    if  not is_booking_room_available(room, check_in, check_out):
         messagebox.showwarning(
         "Room Unavailable",
         "ห้องพักไม่ว่าง โปรดจองวันอื่น"
