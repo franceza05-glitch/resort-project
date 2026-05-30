@@ -271,7 +271,7 @@ def open_booking_window():
     )
 
     booking_window.geometry(
-            "400x300"
+            "700x500"
     )
     # Name
     tk.Label(
